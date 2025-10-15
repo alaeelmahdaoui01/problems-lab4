@@ -3,7 +3,6 @@ package problem2;
 public class IntegerList
 {
     int currentNum = 0 ;
-    int currentSize = 0 ;
     int[] list; //values in the list
     //-------------------------------------------------------
 //create a list of the given size
@@ -11,7 +10,6 @@ public class IntegerList
     public IntegerList(int size)
     {
         list = new int[size];
-        currentSize = size ;
     }
     //-------------------------------------------------------
 //fill array with integers between 1 and 100, inclusive
@@ -40,41 +38,44 @@ public class IntegerList
     }
 
     public void addElement( int n){
-        if (currentSize != currentNum){
-            list[currentNum] = n ;
-        }
-        else {
+        if (list.length == currentNum){
             list = increaseSize();
-            list[list.length-1] = n ;
         }
+        list[currentNum] = n ;
+        currentNum++;
     }
 
     public void removeFirst(int newVal){
         int foundindex = -1 ;
-        for (int i=0 ; i<list.length ; i++){
+        for (int i=0 ; i<currentNum ; i++){
             if (list[i]==newVal){
                 foundindex = i ;
                 break ;
             }
         }
         if (foundindex != -1){
-            for (int i=foundindex ; i<currentNum ; i++){
+            for (int i=foundindex ; i<currentNum -1 ; i++){
                 list[i] = list[i+1] ;
-                currentNum -- ;
             }
+
+            currentNum -- ;
+            list[currentNum] = 0;
         }
+
     }
 
     public void removeAll(int newVal){
-        for (int i=0 ; i<list.length ; i++){
+        int i=0 ;
+        while (i<currentNum){
             if (list[i]==newVal){
-
-                for (int j=i ; j<currentNum ; j++){
+                for (int j=i ; j<currentNum-1 ; j++){
                     list[j] = list[j+1] ;
-                    currentNum -- ;
-                }
 
+                }
+                currentNum -- ;
+                list[currentNum] = 0;
             }
+            else{ i++ ;}  // if we do a for loop that just increments i, we can skip values
         }
 
     }

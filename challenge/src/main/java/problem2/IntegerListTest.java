@@ -41,17 +41,23 @@ public class IntegerListTest
                 list.print();
                 break;
             case 3:
+
                 System.out.println("What element do you want to add to the list? ");
                 int element = scan.nextInt();
                 list.addElement(element);
+                break;
             case 4:
+
                 System.out.println("What element do you want to remove from the list? ");
                 int value1 = scan.nextInt();
                 list.removeFirst(value1);
+                break;
             case 5:
+
                 System.out.println("What value do you want to remove from the list? ");
                 int value2 = scan.nextInt();
                 list.removeAll(value2);
+                break;
             default:
                 System.out.println("Sorry, invalid choice");
         }
