@@ -118,6 +118,7 @@ public class Major {
     public StringBuilder getStudentListAsString(){
         StringBuilder studentsString = new StringBuilder("Students in this major: ") ;
         for (int i=0; i<studentCount; i++){
+            studentsString.append("\n");
             studentsString.append(students[i].getFullNameFormatted());
         }
         return studentsString ;
