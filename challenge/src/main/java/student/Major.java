@@ -8,15 +8,13 @@ public class Major {
     private Student[] students;
     private int studentCount;
 
-    //public static Major cs = new Major("23",) ;
-
 
     public Major() {
         this.id = nextId++ ;
         this.code = "23";
         this.name = "Computer science";
         this.studentCount = 0;
-        students = new Student[10] ;
+        students = new Student[50] ;
     }
 
     public Major(String code, String name) {
@@ -24,20 +22,16 @@ public class Major {
         this.code = code;
         this.name = name;
         this.studentCount = 0;
-        students = new Student[10] ;
+        students = new Student[50] ;
     }
 
 
     // Method to add a student
     public void addStudent(Student s) {
+        if (s.getMajor() != null && s.getMajor() != this){
+            s.getMajor().removeStudent(s.getCne()) ;
+        }
         if (studentCount<50){
-            if (students.length == studentCount){
-                Student[] newStudents = new Student[students.length *  2] ;
-                for (int i=0; i<students.length; i++){
-                    newStudents[i] = students[i];
-                }
-                students = newStudents ;
-            }
             students[studentCount] = s ;
             studentCount ++ ;
         }
@@ -66,7 +60,7 @@ public class Major {
 
     @Override
     public String toString(){
-        return "Major= code: " + this.code+ ", name: "+ this.name+ ", effectif: " + this.studentCount;
+        return "Major= code: " + this.code+ ", name: "+ this.name+ ", number of students: " + this.studentCount;
     }
 
     // Display all students in the major
@@ -77,5 +71,56 @@ public class Major {
         }
     }
 
+    public Student findStudentByCNE(String cne){
+
+        for (int i=0; i<studentCount; i++){
+            if (students[i].getCne() == cne){
+                return students[i];
+            }
+        }
+        return null ;
+    }
+
+    public int getStudentCount(){
+        return studentCount ;
+    }
+
+    public boolean removeStudent(String cne){
+        Student student  = findStudentByCNE(cne);
+
+        if (student != null){
+            int indexFound = -1 ;
+            for (int i=0 ; i<studentCount; i++){
+                if (students[i] == student ){
+                    indexFound = i ;
+                }
+            }
+
+            for (int i=indexFound ; i<studentCount-1; i++){
+                students[i] = students[i+1];
+            }
+            studentCount -- ;
+            students[studentCount] = null ;
+            return true ;
+        }
+        return false ;
+
+    }
+
+
+    public void getOccupiedRate(){
+        System.out.println(this.name + " capacity: 50 students" );
+        System.out.println("Current enrollment: " + studentCount + " students");
+        double rate = ((double) studentCount/50)*100 ;
+        System.out.println("Occupancy rate= " + rate+ "%" );
+    }
+
+    public StringBuilder getStudentListAsString(){
+        StringBuilder studentsString = new StringBuilder("Students in this major: ") ;
+        for (int i=0; i<studentCount; i++){
+            studentsString.append(students[i].getFullNameFormatted());
+        }
+        return studentsString ;
+    }
 
 }

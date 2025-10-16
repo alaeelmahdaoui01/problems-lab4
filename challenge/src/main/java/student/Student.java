@@ -29,14 +29,30 @@ public class Student extends Person {
     public void setCne(String cne) {
         this.cne = cne;
     }
+
+
     public void setMajor(Major major){
-        this.major = major ;
+        if (this.major != null && this.major != major){
+            this.major.removeStudent(cne) ;
+        }
+        this.major = major  ;
+        this.major.addStudent(this);
+
+    }
+
+
+
+    public StringBuilder getFullNameFormatted(){
+        StringBuilder fullname = new StringBuilder(firstName.toUpperCase() + ", "+ secondName);
+        return fullname ;
     }
 
     @Override
     public String toString(){
-        return this.cne+ " "+ this.firstName+ " " + this.secondName ;
+        return this.cne+ " "+ getFullNameFormatted() ;
     }
+
+
 
 }
 
